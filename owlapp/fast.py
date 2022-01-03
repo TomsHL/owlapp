@@ -33,7 +33,11 @@ def index():
 # POST endpoint to add a new comment on an object
 @app.post("/new_comment")
 def post_comment(item: Item):
+
+    # Detect language of the comment
     source_lang = translation.detect_language(item.text_new_comment)
+
+    # Translate comment (If comment is neither En nor Fr, raise error)
     if source_lang == 'en':
         return translation.translate_text('fr', item.text_new_comment)
     elif source_lang == 'fr':
