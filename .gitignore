@@ -8,3 +8,5 @@ raw_data/
 .env
 *.ipynb
 .gitignore
+testlinks.txt
+test-images/
