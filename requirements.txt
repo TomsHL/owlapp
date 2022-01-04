@@ -10,3 +10,7 @@ fastapi
 # utilities
 six>=1.14
 google-cloud-translate==2.0.1
+
+# SQL
+sqlalchemy
+psycopg2

@@ -1,0 +1,5 @@
+services:
+  app :
+    build: ./owlapp/
+  db:
+    build: ./owlappdb/
