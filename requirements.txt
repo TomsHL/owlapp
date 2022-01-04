@@ -16,3 +16,8 @@ google-cloud-translate==2.0.1
 # SQL
 sqlalchemy
 psycopg2
+
+# Slack
+slackclient
+slackeventsapi
+Flask
