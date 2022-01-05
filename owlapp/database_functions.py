@@ -5,7 +5,7 @@ import os
 load_dotenv()
 
 # Connect to the database
-db_string = 'postgresql://username:secret@db:5432/owlappdb'
+db_string = os.getenv('DB_STRING')
 db = create_engine(db_string)
 
 
