@@ -10,3 +10,4 @@ raw_data/
 .gitignore
 testlinks.txt
 test-images/
+*.json

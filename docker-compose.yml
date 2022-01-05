@@ -1,11 +1,15 @@
 services:
   app :
-    build: ./owlapp/
-    environment:
-      # authentication
-      GOOGLE_APPLICATION_CREDENTIALS: ${GCP_KEY_PATH}
-      volumes:
-      # Inject service account key file into the container at runtime:
-      - ${GCP_KEY_PATH}:${GCP_KEY_PATH}:ro
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 8008:8000
+    depends_on:
+      - db
+    volumes:
+      - ./keys:/keys
   db:
     build: ./owlappdb/

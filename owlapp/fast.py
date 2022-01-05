@@ -17,7 +17,7 @@ import uvicorn
 '''
 
 #  Instantiate FastAPI app, manage CORS (allow all connections)
-app = FastAPI()
+app = FastAPI(title="Owlapp")
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,7 +41,7 @@ class Item(BaseModel):
 # Root method
 @app.get("/")
 def index():
-    return {"greeting": "Status UP"}
+    return  {"greeting": "Status UP"}
 
 
 # POST endpoint to add a new comment on an object

@@ -4,17 +4,10 @@ import os
 
 load_dotenv()
 
-db_name = os.getenv("DB_NAME")
-db_user = os.getenv("DB_USER")
-db_pass = os.getenv("DB_PASS")
-db_host = os.getenv("DB_HOST")
-db_port = str(os.getenv("DB_PORT"))
-
 # Connect to the database
-#db_string = 'postgresql://{}:{}@{}:{}/{}'.format(db_user, db_pass, db_host, db_port, db_name)
-# Uncomment next line and comment previous one for local testing on UNIX
-db_string = "postgresql://owlappdb:secret@localhost:5432/owlappdb"
+db_string = 'postgresql://username:secret@db:5432/owlappdb'
 db = create_engine(db_string)
+
 
 def insert_comment(targetId, textFr, textEn, publishedAt, authorId):
     # Insert a new comment in the db, with auto-increment id
@@ -38,4 +31,5 @@ def get_comments(targetId):
 
 
 if __name__ == '__main__':
-    pass
+    print(db_string)
+    print(type(db_string))
