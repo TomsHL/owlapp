@@ -3,9 +3,9 @@ services:
     build: ./owlapp/
     environment:
       # authentication
-      GOOGLE_APPLICATION_CREDENTIALS: /tmp/keys/wagon-data-722-lardreau.json
+      GOOGLE_APPLICATION_CREDENTIALS: ${GCP_KEY_PATH}
       volumes:
       # Inject service account key file into the container at runtime:
-      - ${GCP_KEY_PATH}:/tmp/keys/wagon-data-722-lardreau.json:ro
+      - ${GCP_KEY_PATH}:${GCP_KEY_PATH}:ro
   db:
     build: ./owlappdb/

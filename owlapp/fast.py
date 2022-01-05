@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from owlapp import translation, database_functions as dbf
+from owlapp import translation, database_functions as dbf, slack_functions as sf
 from pydantic import BaseModel
 from typing import Optional
 
@@ -16,7 +16,7 @@ import uvicorn
     - 3nd endpoint : retrieve all comments on a channel attached to a target.
 '''
 
-#  Instantiate app, manage CORS (allow all connections)
+#  Instantiate FastAPI app, manage CORS (allow all connections)
 app = FastAPI()
 
 app.add_middleware(
@@ -41,7 +41,7 @@ class Item(BaseModel):
 # Root method
 @app.get("/")
 def index():
-    return {"greeting": "Status OK"}
+    return {"greeting": "Status UP"}
 
 
 # POST endpoint to add a new comment on an object
@@ -67,6 +67,10 @@ def post_comment(item: Item):
         dbf.insert_comment(resp['targetId'], resp['textFr'], resp['textEn'],
                            resp['publishedAt'], resp['authorId'])
 
+        # Post the comment on Slack
+        sf.post_message(item.authorId, item.targetId, translated,
+                        item.text_new_comment)
+
         # Returning the result to the request
         return json.dumps(resp)
 
@@ -83,6 +87,10 @@ def post_comment(item: Item):
         dbf.insert_comment(resp['targetId'], resp['textFr'], resp['textEn'],
                            resp['publishedAt'], resp['authorId'])
 
+        # Post the comment on Slack
+        sf.post_message(item.authorId, item.targetId, item.text_new_comment,
+                        translated)
+
         # Returning the result to the request
         return json.dumps(resp)
     else:
@@ -91,7 +99,7 @@ def post_comment(item: Item):
                             detail="Source language is not Fr or En")
 
 
-# retrieve all comments on the channel matching a comment ID
+# retrieve all comments on the channel matching a target ID
 @app.get("/get_comments")
 def enpoint_get_comments(targetId):
     comments = dbf.get_comments(targetId)
