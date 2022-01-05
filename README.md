@@ -112,6 +112,7 @@ d= json.loads(req.content)
 OK I see, difficult customer here. Here you go then:
 - You can fill your database address in the .env (see Setup/Postgresql database above). Then, rebuild the docker-compose, and launch only the app part : 
 
+In the global owlapp directory: 
 ```
 docker-compose run app bash 
 ```
