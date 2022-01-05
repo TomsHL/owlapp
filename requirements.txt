@@ -19,5 +19,3 @@ psycopg2
 
 # Slack
 slackclient
-slackeventsapi
-Flask
